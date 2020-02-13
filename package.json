@@ -5,11 +5,14 @@
   "repository": "git@github.com:1sdc0d3r/node-db4-project.git",
   "author": "Braden <fish2355@hotmail.com>",
   "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "knex": "^0.20.9",
-    "nodemon": "^2.0.2",
     "sqlite": "^3.0.3"
   }
 }

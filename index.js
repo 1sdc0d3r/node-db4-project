@@ -8,7 +8,7 @@ const recipeRoutes = require("./routes/recipesRouter");
 const server = express();
 server.use(helmet());
 server.use(express.json());
-server.use(morgan());
+server.use(morgan("combined"));
 
 server.use("/api/recipes", recipeRoutes);
 

@@ -11,14 +11,17 @@ function getRecipes() {
 }
 
 function getShoppingList(RecipeId) {
-  return rb("book as b")
+  return rb("Book as b")
     .join("Recipes as r", "b.RecipeId", "r.id")
-    .join("Ingredients as i", "b.ingredientsId", "i.id")
+    .join("Ingredients as i", "b.ingredientId", "i.id")
+    .select("i.name", "quantity")
     .where("quantity", ">", 0)
     .andWhere({ RecipeId });
 }
 
-function getInstructions(recipe_id) {
-  return rb("steps").where("Recipe_id", recipe_id);
-  //? {recipe_id}
+function getInstructions(RecipeId) {
+  return rb("steps")
+    .where({ RecipeId })
+    .select("StepNumber", "Description")
+    .orderBy("StepNumber");
 }

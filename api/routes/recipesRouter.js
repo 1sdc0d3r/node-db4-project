@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../data/recipeBookModel");
+const db = require("../../data/recipeBookModel");
+const middleware = require("../middleware");
 
 router.get("/", (req, res) => {
   db.getRecipes()
@@ -15,7 +16,7 @@ router.get("/", (req, res) => {
         .json({ errorMessage: "unable to retrieve recipes.", error: err })
     );
 });
-router.get("/:id/shoppingList", (req, res) => {
+router.get("/:id/shoppingList", middleware.validRecipeId, (req, res) => {
   db.getShoppingList(req.params.id)
     .then(
       list => res.status(200).send(list)
@@ -27,7 +28,7 @@ router.get("/:id/shoppingList", (req, res) => {
         .json({ errorMessage: "Unable to retrieve shopping list.", error: err })
     );
 });
-router.get("/:id/instructions", (req, res) => {
+router.get("/:id/instructions", middleware.validRecipeId, (req, res) => {
   db.getInstructions(req.params.id)
     .then(steps => res.status(200).json(steps))
     .catch(err =>

@@ -9,6 +9,7 @@ module.exports = {
 function getRecipes() {
   return rb("Recipes");
 }
+
 function getShoppingList(RecipeId) {
   return rb("book as b")
     .join("Recipes as r", "b.RecipeId", "r.id")

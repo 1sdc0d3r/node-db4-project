@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
     .then(recipes =>
       !recipes
         ? res.status(404).json({ message: "No recipes in book" })
-        : res.status(400).send(recipes)
+        : res.status(200).send(recipes)
     )
     .catch(err =>
       res
@@ -16,6 +16,34 @@ router.get("/", (req, res) => {
         .json({ errorMessage: "unable to retrieve recipes.", error: err })
     );
 });
+
+router.get("/:id", middleware.validRecipeId, (req, res) => {
+  const { id } = req.params;
+  db.getRecipeById(id)
+    .then(recipe => {
+      return {
+        id: recipe.id,
+        name: recipe.name
+      };
+    })
+    .then(addSteps => {
+      return db.getInstructions(id).then(steps => {
+        return { ...addSteps, steps: steps };
+      });
+    })
+    .then(addIngredients => {
+      return db.getIngredientsByRecipe(id).then(ingredients => {
+        return {
+          ...addIngredients,
+          ingredients: ingredients
+        };
+      });
+    })
+    .then(finalRecipe => {
+      res.status(200).json(finalRecipe);
+    });
+});
+
 router.get("/:id/shoppingList", middleware.validRecipeId, (req, res) => {
   db.getShoppingList(req.params.id)
     .then(
@@ -28,6 +56,7 @@ router.get("/:id/shoppingList", middleware.validRecipeId, (req, res) => {
         .json({ errorMessage: "Unable to retrieve shopping list.", error: err })
     );
 });
+
 router.get("/:id/instructions", middleware.validRecipeId, (req, res) => {
   db.getInstructions(req.params.id)
     .then(steps => res.status(200).json(steps))

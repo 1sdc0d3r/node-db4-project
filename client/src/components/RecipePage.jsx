@@ -8,21 +8,22 @@ export default class RecipePage extends Component {
     this.state = {
       id: "",
       name: "",
-      ingredients: "",
-      steps: ""
+      ingredients: [],
+      steps: []
     };
   }
   componentWillMount() {
     const { id } = this.props.match.params;
     axios
       .get(`http://localhost:8000/api/recipes/${id}`)
-      .then(
-        res => console.log(res.data)
-        // this.setState({
-        //   ...this.state,
-        //   id: res.data.id,
-        //   name: res.data.name
-        // })
+      .then(res =>
+        this.setState({
+          ...this.state,
+          id: res.data.id,
+          name: res.data.name,
+          steps: res.data.steps,
+          ingredients: res.data.ingredients
+        })
       )
       .catch(err => console.log(err));
   }
@@ -30,9 +31,24 @@ export default class RecipePage extends Component {
   render() {
     return (
       <div className="recipe">
-        <p>
-          {this.state.id} {this.state.name}
-        </p>
+        <h2>
+          {this.state.id}. {this.state.name}
+        </h2>
+        <div className="Ingredients">
+          {this.state.ingredients.map(i => (
+            <p>
+              {i.name} - {i.Quantity}
+            </p>
+          ))}
+        </div>
+        <div className="directions">
+          <h3>Directions: </h3>
+          {this.state.steps.map(step => (
+            <p>
+              {step.StepNumber}: {step.Description}
+            </p>
+          ))}
+        </div>
       </div>
     );
   }

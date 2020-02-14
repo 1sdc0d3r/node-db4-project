@@ -29,9 +29,9 @@ export default class App extends Component {
     return (
       <div className="App">
         <nav>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/recipes">Recipes</NavLink>
-          <NavLink to="/shoppingList">Shopping List</NavLink>
+          {/* <NavLink to="/">Home</NavLink> */}
+          <NavLink to="/recipes">Home: Recipes</NavLink>
+          {/* <NavLink to="/shoppingList">Shopping List</NavLink> */}
         </nav>
         <Switch>
           <Route path="/recipes/:id" component={RecipePage} />

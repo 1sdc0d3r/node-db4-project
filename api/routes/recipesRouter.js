@@ -32,7 +32,7 @@ router.get("/:id", middleware.validRecipeId, (req, res) => {
       });
     })
     .then(addIngredients => {
-      return db.getIngredientsByRecipe(id).then(ingredients => {
+      return db.getShoppingList(id).then(ingredients => {
         return {
           ...addIngredients,
           ingredients: ingredients

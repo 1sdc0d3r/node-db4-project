@@ -35,6 +35,7 @@ export default class RecipePage extends Component {
           {this.state.id}. {this.state.name}
         </h2>
         <div className="Ingredients">
+          <h3>Ingredients: </h3>
           {this.state.ingredients.map(i => (
             <p>
               {i.name} - {i.Quantity}

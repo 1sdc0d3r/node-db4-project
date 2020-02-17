@@ -23,6 +23,7 @@ export default class App extends Component {
         })
       )
       .catch(err => console.log(err));
+    console.log("TEST");
   }
 
   render() {
